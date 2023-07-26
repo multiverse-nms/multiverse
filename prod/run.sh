@@ -4,8 +4,7 @@ set -e
 
 export EXTERNAL_IP="127.0.0.1"
 
-# GUI:
-export SERVER_IP="127.0.0.1"
+export SERVER_IP="10.11.200.125"
 
 # api-gateway:
 export TOKEN_PHRASE="keyboard cat"
@@ -22,19 +21,16 @@ export B205="admin:root"
 export GCF="admin:root"
 
 
-# Get this script directory (to find yml from any directory)
-export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
 # Stop containers
-docker-compose -f $DIR/docker-compose.yml stop
+docker-compose -f docker-compose.yml stop
 
 # Start persistence containers
-docker-compose -f $DIR/docker-compose.yml up -d mysql mongo activemq
+docker-compose -f docker-compose.yml up -d mysql mongo activemq
 sleep 60
 
 # Start topology service
-docker-compose -f $DIR/docker-compose.yml up -d topology-microservice
+docker-compose -f docker-compose.yml up -d topology-microservice
 sleep 60
 
 # Start other services
-docker-compose -f $DIR/docker-compose.yml up
+docker-compose -f docker-compose.yml up

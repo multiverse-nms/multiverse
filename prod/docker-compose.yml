@@ -20,6 +20,7 @@ services:
       - nms
   activemq:
     image: rmohr/activemq
+    hostname: activemq
     restart: always
     expose:
       - "5672"
@@ -30,7 +31,7 @@ services:
   # Base services
   api-gateway:
     image: multiversenms/api-gateway:latest
-    hostname: multiverse-controller
+    hostname: api-gateway
     ports:
       - "8787:8787"
     environment:
@@ -40,7 +41,7 @@ services:
       - "dockernet:${EXTERNAL_IP}"
     networks: 
       - nms
-  account:
+  account-microservice:
     image: multiversenms/account:latest
     links:
       - mongo
@@ -51,13 +52,13 @@ services:
       - "8083"
     networks: 
       - nms
-  telemetry:
+  telemetry-microservice:
     image: multiversenms/telemetry:latest
     expose:
       - "8082"
     networks:
       - nms
-  topology:
+  topology-microservice:
     image: multiversenms/topology:latest
     links:
       - mysql
@@ -67,14 +68,14 @@ services:
       - "8085"
     networks: 
       - nms
-  fault:
+  fault-microservice:
     image: multiversenms/fault:latest
     expose:
       - "8084"
     networks:
       - nms
   # Optical services
-  qconnection:
+  qconnection-microservice:
     image: multiversenms/qconnection:latest
     environment:
       - B205=${B205}
@@ -83,7 +84,7 @@ services:
       - "8090"
     networks:
       - nms
-  oxcdevice:
+  oxcdevice-microservice:
     image: multiversenms/oxcdevice:latest
     environment:
       - B205=${B205}
@@ -92,26 +93,28 @@ services:
       - "8091"
     networks:
       - nms
-  path:
-    image: path
+  path-microservice:
+    image: multiversenms/path:latest
     expose:
       - "8092"
     networks:
       - nms
   # IP services
-  ipcollect:
+  ipcollect-microservice:
     image: multiversenms/ipcollect:latest
     environment:
-      - CONTROLLER="api-gateway"
+      - CONTROLLER=${SERVER_IP}
+      - AMQP_BROKER=${SERVER_IP}
       # add others ...
     expose:
       - "8071"
     networks:
       - nms
-  ipconfig:
+  ipconfig-microservice:
     image: multiversenms/ipconfig:latest
     environment:
-      - CONTROLLER="api-gateway"
+      - CONTROLLER=${SERVER_IP}
+      - AMQP_BROKER=${SERVER_IP}
       # add others ...
     expose:
       - "8072"
@@ -123,7 +126,7 @@ services:
     environment:
       - VUE_APP_SERVER=${SERVER_IP}
     ports:
-      - "8080:8080"
+      - "8080:80"
     networks:
       - nms
 networks:
