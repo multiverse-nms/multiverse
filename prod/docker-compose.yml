@@ -1,0 +1,131 @@
+version: "3"
+services:
+  # Infrastructure
+  mysql:
+    image: mysql:5.7
+    restart: always
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=nms
+    networks: 
+      - nms
+  mongo:
+    image: mongo:latest
+    restart: always
+    expose:
+      - "27017"
+    networks: 
+      - nms
+  activemq:
+    image: rmohr/activemq
+    restart: always
+    expose:
+      - "5672"
+    ports:
+      - "5672:5672"
+    networks: 
+      - nms
+  # Base services
+  api-gateway:
+    image: multiversenms/api-gateway:latest
+    hostname: multiverse-controller
+    ports:
+      - "8787:8787"
+    environment:
+      - TOKEN_PHRASE=${TOKEN_PHRASE}
+      - JAVA_OPTS="-Xms128m -Xmx256m"
+    extra_hosts:
+      - "dockernet:${EXTERNAL_IP}"
+    networks: 
+      - nms
+  account:
+    image: multiversenms/account:latest
+    links:
+      - mongo
+    environment:
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    expose:
+      - "8083"
+    networks: 
+      - nms
+  telemetry:
+    image: multiversenms/telemetry:latest
+    expose:
+      - "8082"
+    networks:
+      - nms
+  topology:
+    image: multiversenms/topology:latest
+    links:
+      - mysql
+    environment:
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    expose:
+      - "8085"
+    networks: 
+      - nms
+  fault:
+    image: multiversenms/fault:latest
+    expose:
+      - "8084"
+    networks:
+      - nms
+  # Optical services
+  qconnection:
+    image: multiversenms/qconnection:latest
+    environment:
+      - B205=${B205}
+      - GCF=${GCF}
+    expose:
+      - "8090"
+    networks:
+      - nms
+  oxcdevice:
+    image: multiversenms/oxcdevice:latest
+    environment:
+      - B205=${B205}
+      - GCF=${GCF}
+    expose:
+      - "8091"
+    networks:
+      - nms
+  path:
+    image: path
+    expose:
+      - "8092"
+    networks:
+      - nms
+  # IP services
+  ipcollect:
+    image: multiversenms/ipcollect:latest
+    environment:
+      - CONTROLLER="api-gateway"
+      # add others ...
+    expose:
+      - "8071"
+    networks:
+      - nms
+  ipconfig:
+    image: multiversenms/ipconfig:latest
+    environment:
+      - CONTROLLER="api-gateway"
+      # add others ...
+    expose:
+      - "8072"
+    networks:
+      - nms
+  # GUI
+  multiverse-gui:
+    image: multiversenms/gui:latest
+    environment:
+      - VUE_APP_SERVER="127.0.0.1"    # use IP address
+    ports:
+      - "8080:8080"
+    networks:
+      - nms
+networks:
+  nms:
+    driver: bridge
