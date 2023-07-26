@@ -121,7 +121,7 @@ services:
   multiverse-gui:
     image: multiversenms/gui:latest
     environment:
-      - VUE_APP_SERVER="127.0.0.1"    # use IP address
+      - VUE_APP_SERVER=${SERVER_IP}
     ports:
       - "8080:8080"
     networks:

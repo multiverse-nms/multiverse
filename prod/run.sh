@@ -4,8 +4,8 @@ set -e
 
 export EXTERNAL_IP="127.0.0.1"
 
-# ENV variables to complete:
-# TOKEN_PHRASE, ADMIN_USERNAME, ADMIN_PASSWORD, MYSQL_PASSWORD, B205, GCF
+# GUI:
+export SERVER_IP="127.0.0.1"
 
 # api-gateway:
 export TOKEN_PHRASE="keyboard cat"
