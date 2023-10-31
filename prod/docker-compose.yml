@@ -35,21 +35,9 @@ services:
     ports:
       - "8787:8787"
     environment:
-      - TOKEN_PHRASE=${TOKEN_PHRASE}
       - JAVA_OPTS="-Xms128m -Xmx256m"
     extra_hosts:
-      - "dockernet:${EXTERNAL_IP}"
-    networks: 
-      - nms
-  account-microservice:
-    image: multiversenms/account:latest
-    links:
-      - mongo
-    environment:
-      - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-    expose:
-      - "8083"
+      - "dockernet:${SERVER_IP}"
     networks: 
       - nms
   telemetry-microservice:
@@ -120,6 +108,29 @@ services:
       - "8072"
     networks:
       - nms
+
+  # User access
+  postgresql:
+    image: docker.io/bitnami/postgresql:11
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=bn_keycloak
+      - POSTGRESQL_DATABASE=bitnami_keycloak
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    networks:
+      - nms
+  keycloak:
+    image: docker.io/bitnami/keycloak:22
+    environment:
+      - KEYCLOAK_HTTP_PORT=8888
+    depends_on:
+      - postgresql
+    ports:
+      - "8888:8888"
+    networks:
+      - nms
+
   # GUI
   multiverse-gui:
     image: multiversenms/gui:latest
@@ -129,6 +140,10 @@ services:
       - "8080:80"
     networks:
       - nms
+
+volumes:
+  postgresql_data:
+    driver: local
 networks:
   nms:
     driver: bridge

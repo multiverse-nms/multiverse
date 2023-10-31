@@ -2,16 +2,7 @@
 
 set -e
 
-export EXTERNAL_IP="127.0.0.1"
-
 export SERVER_IP="10.11.200.125"
-
-# api-gateway:
-export TOKEN_PHRASE="keyboard cat"
-
-# account:
-export ADMIN_USERNAME="admin"
-export ADMIN_PASSWORD="admin"
 
 # topology:
 export MYSQL_PASSWORD="12345"
@@ -25,7 +16,7 @@ export GCF="admin:root"
 docker-compose -f docker-compose.yml stop
 
 # Start persistence containers
-docker-compose -f docker-compose.yml up -d mysql mongo activemq
+docker-compose -f docker-compose.yml up -d mysql mongo activemq postgresql keycloak
 sleep 60
 
 # Start topology service
