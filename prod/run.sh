@@ -21,7 +21,7 @@ sleep 60
 
 # Start topology service
 docker-compose -f docker-compose.yml up -d topology-microservice
-sleep 30
+sleep 60
 
 # Start other services
 docker-compose -f docker-compose.yml up
