@@ -88,26 +88,24 @@ services:
     networks:
       - nms
   # IP services
-  ipcollect-microservice:
-    image: multiversenms/ipcollect:latest
-    environment:
-      - CONTROLLER=${SERVER_IP}
-      - AMQP_BROKER=${SERVER_IP}
-      # add others ...
-    expose:
-      - "8071"
-    networks:
-      - nms
-  ipconfig-microservice:
-    image: multiversenms/ipconfig:latest
-    environment:
-      - CONTROLLER=${SERVER_IP}
-      - AMQP_BROKER=${SERVER_IP}
-      # add others ...
-    expose:
-      - "8072"
-    networks:
-      - nms
+  #ipcollect-microservice:
+  #  image: multiversenms/ipcollect:latest
+  #  environment:
+  #    - CONTROLLER=${SERVER_IP}
+  #    - AMQP_BROKER=${SERVER_IP}
+  #  expose:
+  #    - "8071"
+  #  networks:
+  #    - nms
+  #ipconfig-microservice:
+  #  image: multiversenms/ipconfig:latest
+  #  environment:
+  #    - CONTROLLER=${SERVER_IP}
+  #    - AMQP_BROKER=${SERVER_IP}
+  #  expose:
+  #    - "8072"
+  #  networks:
+  #    - nms
 
   # User access
   postgresql:
