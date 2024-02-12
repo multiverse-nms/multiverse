@@ -17,7 +17,7 @@ docker-compose -f docker-compose.yml stop
 
 # Start persistence containers
 docker-compose -f docker-compose.yml up -d mysql mongo activemq postgresql keycloak
-sleep 30
+sleep 60
 
 # Start topology service
 docker-compose -f docker-compose.yml up -d topology-microservice
