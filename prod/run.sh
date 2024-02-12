@@ -2,7 +2,7 @@
 
 set -e
 
-export SERVER_IP="10.11.200.125"
+export SERVER_IP="localhost"
 
 # topology:
 export MYSQL_PASSWORD="12345"
