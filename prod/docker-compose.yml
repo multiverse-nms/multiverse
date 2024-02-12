@@ -36,8 +36,6 @@ services:
       - "8787:8787"
     environment:
       - JAVA_OPTS="-Xms128m -Xmx256m"
-    extra_hosts:
-      - "dockernet:${SERVER_IP}"
     networks: 
       - nms
   telemetry-microservice:

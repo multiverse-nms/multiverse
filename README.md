@@ -38,4 +38,4 @@ sudo ./run.sh -E
 ```
 
 The GUI is accessible at `http://localhost:8080`. 
-Use `admin`:`multiverse` to login. 
+Use `amar`:`amar00` to login. 
