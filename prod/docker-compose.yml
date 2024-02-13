@@ -32,6 +32,7 @@ services:
   api-gateway:
     image: multiversenms/api-gateway:latest
     hostname: api-gateway
+    restart: always
     ports:
       - "8787:8787"
     environment:
@@ -40,13 +41,18 @@ services:
       - nms
   telemetry-microservice:
     image: multiversenms/telemetry:latest
+    restart: always
+    depends_on:
+      - mongo
+      - activemq
     expose:
       - "8082"
     networks:
       - nms
   topology-microservice:
     image: multiversenms/topology:latest
-    links:
+    restart: always
+    depends_on:
       - mysql
     environment:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
@@ -56,6 +62,7 @@ services:
       - nms
   fault-microservice:
     image: multiversenms/fault:latest
+    restart: always
     expose:
       - "8084"
     networks:
@@ -63,6 +70,9 @@ services:
   # Optical services
   qconnection-microservice:
     image: multiversenms/qconnection:latest
+    restart: always
+    depends_on:
+      - topology-microservice
     environment:
       - B205=${B205}
       - GCF=${GCF}
@@ -72,6 +82,9 @@ services:
       - nms
   oxcdevice-microservice:
     image: multiversenms/oxcdevice:latest
+    restart: always
+    depends_on:
+      - topology-microservice
     environment:
       - B205=${B205}
       - GCF=${GCF}
@@ -83,6 +96,9 @@ services:
       - nms
   path-microservice:
     image: multiversenms/path:latest
+    restart: always
+    depends_on:
+      - topology-microservice
     expose:
       - "8092"
     networks:
@@ -110,6 +126,7 @@ services:
   # User access
   postgresql:
     image: docker.io/bitnami/postgresql:11
+    restart: always
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - POSTGRESQL_USERNAME=bn_keycloak
@@ -136,6 +153,8 @@ services:
   # GUI
   multiverse-gui:
     image: multiversenms/gui:latest
+    depends_on:
+      - api-gateway
     environment:
       - VUE_APP_SERVER=${SERVER_IP}
     ports:
