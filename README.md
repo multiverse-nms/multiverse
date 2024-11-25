@@ -5,13 +5,12 @@
 
 ## Overview
 
-Multiverse is a research platform for configuring, monitoring and managing networks.
+Multiverse is a research platform for configuring, monitoring and managing optical quantum networks.
 
 Multiverse supports the management of the following technologies:
 - Optical networks with Polatis switches.
-- Classical (IP) neworks with OCNOS swtiches.
-- Named Data Networks with [NDN-DPDK](https://github.com/usnistgov/ndn-dpdk) forwarder.
-- Telemetry for network monitoring and general data collection.
+- Wavelength switching with Polatis switches (work in-progress).
+- A measurement plane for network monitoring and data collection from quantum equipment.
 
 [Watch NDN management demo!](https://www.youtube.com/watch?v=fJoglqj3Re8)
 
