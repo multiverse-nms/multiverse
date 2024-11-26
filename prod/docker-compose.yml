@@ -39,16 +39,16 @@ services:
       - JAVA_OPTS="-Xms128m -Xmx256m"
     networks: 
       - nms
-  telemetry-microservice:
-    image: multiversenms/telemetry:latest
-    restart: always
-    depends_on:
-      - mongo
-      - activemq
-    expose:
-      - "8082"
-    networks:
-      - nms
+#  telemetry-microservice:
+#    image: multiversenms/telemetry:latest
+#    restart: always
+#    depends_on:
+#      - mongo
+#      - activemq
+#    expose:
+#      - "8082"
+#    networks:
+#      - nms
   topology-microservice:
     image: multiversenms/topology:latest
     restart: always
