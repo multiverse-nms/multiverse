@@ -125,7 +125,7 @@ services:
 
   # User access
   postgresql:
-    image: docker.io/bitnami/postgresql:11
+    image: docker.io/bitnami/postgresql:12
     restart: always
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
@@ -136,7 +136,7 @@ services:
     networks:
       - nms
   keycloak:
-    image: docker.io/bitnami/keycloak
+    image: docker.io/bitnami/keycloak:22
     restart: always
     environment:
       - KEYCLOAK_HTTP_PORT=8888
