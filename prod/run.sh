@@ -18,12 +18,12 @@ export GCF="admin:root"
 docker-compose -f docker-compose.yml stop
 
 # Start persistence containers
-docker-compose -f docker-compose.yml up -d mysql mongo activemq postgresql keycloak
-sleep 60
+docker-compose -f docker-compose.yml up -d mysql mongo activemq
+sleep 15
 
 # Start topology service
 docker-compose -f docker-compose.yml up -d topology-microservice
-sleep 60
+sleep 30
 
 # Start other services
 docker-compose -f docker-compose.yml up

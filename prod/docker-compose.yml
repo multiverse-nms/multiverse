@@ -124,31 +124,31 @@ services:
   #    - nms
 
   # User access
-  postgresql:
-    image: docker.io/bitnami/postgresql:12
-    restart: always
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - POSTGRESQL_USERNAME=bn_keycloak
-      - POSTGRESQL_DATABASE=bitnami_keycloak
-    volumes:
-      - 'postgresql_data:/bitnami/postgresql'
-    networks:
-      - nms
-  keycloak:
-    image: docker.io/bitnami/keycloak:22
-    restart: always
-    environment:
-      - KEYCLOAK_HTTP_PORT=8888
-      - KEYCLOAK_EXTRA_ARGS=--import-realm
-    depends_on:
-      - postgresql
-    ports:
-      - "8888:8888"
-    volumes:
-      - ./kc_config.json:/opt/bitnami/keycloak/data/import/kc_config.json
-    networks:
-      - nms
+  #postgresql:
+  #  image: docker.io/bitnami/postgresql:12
+  #  restart: always
+  #  environment:
+  #    - ALLOW_EMPTY_PASSWORD=yes
+  #    - POSTGRESQL_USERNAME=bn_keycloak
+  #    - POSTGRESQL_DATABASE=bitnami_keycloak
+  #  volumes:
+  #    - 'postgresql_data:/bitnami/postgresql'
+  #  networks:
+  #    - nms
+  #keycloak:
+  #  image: docker.io/bitnami/keycloak:22
+  #  restart: always
+  #  environment:
+  #    - KEYCLOAK_HTTP_PORT=8888
+  #    - KEYCLOAK_EXTRA_ARGS=--import-realm
+  #  depends_on:
+  #    - postgresql
+  #  ports:
+  #    - "8888:8888"
+  #  volumes:
+  #    - ./kc_config.json:/opt/bitnami/keycloak/data/import/kc_config.json
+  #  networks:
+  #    - nms
 
   # GUI
   multiverse-gui:

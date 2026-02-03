@@ -35,11 +35,6 @@ Ensure the following are installed on your system:
    - Export login credentials as environment variables in the format `<username>:<password>`.
    - Ensure the environment variable names match the corresponding node names in the topology file (case-sensitive).
 
-3. **User Access Management**:
-   - Multiverse uses **Keycloak** for access management.
-   - A basic Keycloak configuration will be initialized by the startup script, enabling local login via the GUI.
-   - For remote GUI access, additional Keycloak endpoint configuration is required. *(Documentation: TBD)*
-
 ---
 
 ## Deployment
@@ -60,9 +55,6 @@ Ensure the following are installed on your system:
 
 ### Graphical User Interface (GUI)
 - Access the GUI at `http://localhost:8080`.
-- Default credentials:  
-  **Username**: `amar`
-  **Password**: `amar00`
 
 ### Python Client
 Multiverse also supports Python-based access.  
